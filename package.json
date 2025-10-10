@@ -9,7 +9,6 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "postinstall": "npm install --legacy-peer-deps"
-
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
@@ -21,10 +20,11 @@
     "react-dom": "18.2.0",
     "react-parallax-tilt": "^1.7.171",
     "react-router-dom": "^6.18.0",
-    "react-simple-maps": "^1.0.0",
+    "react-simple-maps": "^3.0.0",
     "sass": "^1.69.3",
     "styled-components": "^6.1.1",
-    "three": "^0.160.0"
+    "three": "^0.160.0",
+    "upgrade": "^1.1.0"
   },
   "devDependencies": {
     "@types/react": "18.2.15",
