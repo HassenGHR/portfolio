@@ -6,7 +6,7 @@ import project5 from "./tableau.png";
 import project6 from "./powerbi.png";
 import project7 from './telegramBot.png';
 import project8 from './autonav.gif';
-import project9 from './realestate.gif';
+import project9 from './realEstate.gif';
 import project10 from './screenshot.jpg';
 import project11 from './screenshot1.jpg';
 import project12 from './Telegram-Bot.png';
