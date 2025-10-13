@@ -1,226 +1,35 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
-// Mock items - replace with your actual data
-const items = [
-  {
-    id: 1,
-    title: "Online E-Commerce",
-    demo: "https://goldenstoredz.shop/",
-    desc: "Built a user-friendly website using React and Django. This site lets you easily sign in, place orders, make secure payments, and track deliveries.",
-    img: "https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=800&fit=crop",
-    category: "Web Development",
-    tech: ["React", "Django", "PostgreSQL"],
-  },
-  {
-    id: 2,
-    title: "Dynamic Job Platform",
-    demo: "https://jobsearchdz.online/",
-    img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&h=800&fit=crop",
-    desc: "Designed a user-friendly website using Next.js and MongoDB, where individuals can easily log in, apply for jobs, and discover various companies.",
-    category: "Web Development",
-    tech: ["Next.js", "MongoDB", "Node.js"],
-  },
-  {
-    id: 3,
-    title: "React Django Real Estate",
-    demo: "https://immobilierdz.online/",
-    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&h=800&fit=crop",
-    desc: "Created a dynamic website with React and Django, providing secure user authentication for real estate opportunities.",
-    category: "Web Development",
-    tech: ["React", "Django", "REST API"],
-  },
-];
+export default function PortfolioCarousel({ items, activeCategory }) {
+  const carouselRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-const Single = ({ item, index }) => {
-  const ref = useRef();
-  const isInView = useInView(ref, { once: false, margin: "-100px" });
-
-  const isEven = index % 2 === 0;
-
-  return (
-    <section ref={ref} className="min-h-screen flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="max-w-7xl w-full"
-      >
-        <div className={`grid lg:grid-cols-2 gap-12 items-center ${isEven ? '' : 'lg:grid-flow-dense'}`}>
-          {/* Image Section */}
-          <motion.div
-            className={`relative group ${isEven ? '' : 'lg:col-start-2'}`}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Background glow */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-500" />
-            
-            <div className="relative overflow-hidden rounded-2xl border border-slate-700/50 shadow-2xl">
-              <motion.img
-                src={item.img}
-                alt={item.title}
-                className="w-full h-[400px] object-cover"
-                whileHover={{ scale: 1.1 }}
-                transition={{ duration: 0.6 }}
-              />
-              
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60" />
-              
-              {/* Floating category badge */}
-              <motion.div
-                initial={{ y: -20, opacity: 0 }}
-                animate={isInView ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 }}
-                transition={{ delay: 0.3 }}
-                className="absolute top-6 left-6"
-              >
-                <span className="px-4 py-2 bg-purple-500/90 backdrop-blur-sm text-white text-sm font-semibold rounded-full shadow-lg">
-                  {item.category}
-                </span>
-              </motion.div>
-
-              {/* Tech stack badges */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={isInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-                transition={{ delay: 0.4 }}
-                className="absolute bottom-6 left-6 flex gap-2 flex-wrap"
-              >
-                {item.tech?.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1 bg-slate-800/90 backdrop-blur-sm border border-slate-600 text-slate-200 text-xs font-medium rounded-full"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Content Section */}
-          <motion.div
-            initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isEven ? -50 : 50 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className={`${isEven ? '' : 'lg:col-start-1 lg:row-start-1'}`}
-          >
-            {/* Project number */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ delay: 0.3 }}
-              className="mb-4"
-            >
-              <span className="text-purple-400 text-sm font-mono font-semibold">
-                PROJECT {String(index + 1).padStart(2, '0')}
-              </span>
-            </motion.div>
-
-            {/* Title */}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.4 }}
-              className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight"
-            >
-              {item.title}
-            </motion.h2>
-
-            {/* Description */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.5 }}
-              className="mb-8"
-            >
-              <p className="text-gray-400 text-lg leading-relaxed">
-                {item.desc}
-              </p>
-            </motion.div>
-
-            {/* Features/Highlights */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.6 }}
-              className="mb-8 space-y-3"
-            >
-              {["Responsive Design", "Secure Authentication", "Real-time Updates"].map((feature, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500" />
-                  <span className="text-gray-300">{feature}</span>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap gap-4"
-            >
-              <motion.a
-                href={item.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05, x: 5 }}
-                whileTap={{ scale: 0.95 }}
-                className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-              >
-                View Live Demo
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  →
-                </motion.span>
-              </motion.a>
-
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"
-              >
-                View Case Study
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
-  );
-};
-
-const Portfolio = ({ onFilteredItems }) => {
-  const [filteredItems, setFilteredItems] = useState(items);
-  const portfolioRef = useRef();
-
-  useEffect(() => {
-    if (onFilteredItems && onFilteredItems.length > 0) {
-      setFilteredItems(onFilteredItems);
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
     }
-  }, [onFilteredItems]);
+  };
 
-  const { scrollYProgress } = useScroll({
-    target: portfolioRef,
-    offset: ["start end", "end start"],
-  });
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+  const scroll = (direction) => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 400;
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <div
-      ref={portfolioRef}
-      className="relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900"
+      ref={carouselRef}
+      id="portfolio-section"
+      className="portfolio-carousel relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -229,83 +38,114 @@ const Portfolio = ({ onFilteredItems }) => {
         <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
       </div>
 
-      {/* Sticky Progress Header */}
-      <motion.div
-        style={{ opacity }}
-        className="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-800/50"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-between mb-4">
+      {/* Header */}
+      <div className="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-7xl mx-auto"
+        >
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-white">
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">
                 Featured{" "}
                 <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   Works
                 </span>
-              </h1>
-              <p className="text-gray-400 mt-2">
-                Showcasing {filteredItems.length} exceptional projects
+              </h2>
+              <p className="text-gray-400 text-sm lg:text-base">
+                {items.length} {items.length === 1 ? "project" : "projects"}
               </p>
             </div>
-            
-            {/* Scroll indicator */}
-            <motion.div
-              className="hidden md:flex items-center gap-2 text-sm text-gray-400"
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <span>Scroll to explore</span>
-              <span>↓</span>
-            </motion.div>
+
+            {/* Navigation Controls */}
+            <div className="flex items-center gap-3">
+              <motion.button
+                onClick={() => scroll('left')}
+                disabled={!canScrollLeft}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                ←
+              </motion.button>
+              <motion.button
+                onClick={() => scroll('right')}
+                disabled={!canScrollRight}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                →
+              </motion.button>
+            </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="h-1 bg-slate-700/50 rounded-full overflow-hidden">
+          {/* Carousel Container */}
+          <div className="relative">
             <motion.div
-              style={{ scaleX }}
-              className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 origin-left"
-            />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Projects */}
-      <div className="relative">
-        {filteredItems.length > 0 ? (
-          filteredItems.map((item, index) => (
-            <Single key={item.id} item={item} index={index} />
-          ))
-        ) : (
-          <div className="min-h-screen flex items-center justify-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-20"
+              ref={scrollContainerRef}
+              onScroll={checkScroll}
+              onLoad={checkScroll}
+              key={`carousel-${activeCategory}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide scroll-smooth"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+              }}
             >
-              <div className="text-6xl mb-4">🎨</div>
-              <h3 className="text-2xl font-bold text-white mb-2">No projects to display</h3>
-              <p className="text-gray-400">Select a category to view projects</p>
+              {items && items.length > 0 ? (
+                items.map((project, index) => (
+                  <CarouselCard
+                    key={`${project.id}-${index}`}
+                    project={project}
+                    index={index}
+                  />
+                ))
+              ) : (
+                <div className="w-full flex items-center justify-center py-20">
+                  <p className="text-2xl text-gray-400">No projects found</p>
+                </div>
+              )}
             </motion.div>
+
+            {/* Gradient overlays */}
+            {canScrollLeft && (
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-900 to-transparent pointer-events-none" />
+            )}
+            {canScrollRight && (
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-900 to-transparent pointer-events-none" />
+            )}
           </div>
-        )}
+        </motion.div>
       </div>
 
-      {/* Bottom Decoration */}
-      <div className="relative py-20">
+      {/* Bottom CTA */}
+      <div className="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center"
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto"
         >
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
             Like what you see?
           </h3>
-          <p className="text-gray-400 mb-8">Let's create something amazing together</p>
+          <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg">
+            Let's create something amazing together
+          </p>
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(168, 85, 247, 0.5)" }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 0 30px rgba(168, 85, 247, 0.5)",
+            }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+            className="px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-purple-500/50 transition-all duration-300 text-sm sm:text-base"
           >
             Start a Project
           </motion.button>
@@ -313,6 +153,138 @@ const Portfolio = ({ onFilteredItems }) => {
       </div>
     </div>
   );
-};
+}
 
-export default Portfolio;
+function CarouselCard({ project, index }) {
+  if (!project) {
+    return <div className="text-white p-20">Project data missing</div>;
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
+      className="flex-shrink-0 w-full md:w-96 snap-start"
+    >
+      <div className="relative group h-full">
+        <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 blur-xl group-hover:opacity-20 transition-opacity duration-500" />
+
+        <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl h-full flex flex-col hover:border-slate-600 transition-all duration-300">
+          {/* Image Section */}
+          <motion.div className="relative overflow-hidden h-56 sm:h-64">
+            <motion.img
+              src={project.img}
+              alt={project.title}
+              className="w-full h-full object-cover"
+              whileHover={{ scale: 1.1 }}
+              transition={{ duration: 0.6 }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60" />
+
+            {/* Category Badge */}
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="absolute top-4 left-4"
+            >
+              <span className="px-3 py-1 bg-purple-500/90 backdrop-blur-sm text-white text-xs font-semibold rounded-full shadow-lg">
+                {project.category}
+              </span>
+            </motion.div>
+
+            {/* Tech Stack */}
+            {project.tech && project.tech.length > 0 && (
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="absolute bottom-4 left-4 flex gap-1 flex-wrap"
+              >
+                {project.tech.slice(0, 3).map((tech, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2 py-0.5 bg-slate-900/90 backdrop-blur-sm border border-slate-600 text-slate-200 text-xs font-medium rounded-full"
+                  >
+                    {tech}
+                  </span>
+                ))}
+                {project.tech.length > 3 && (
+                  <span className="px-2 py-0.5 bg-slate-900/90 backdrop-blur-sm border border-slate-600 text-slate-200 text-xs font-medium rounded-full">
+                    +{project.tech.length - 3}
+                  </span>
+                )}
+              </motion.div>
+            )}
+          </motion.div>
+
+          {/* Content Section */}
+          <div className="flex-1 p-5 sm:p-6 flex flex-col">
+            <motion.h3
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-lg sm:text-xl font-bold text-white mb-2 line-clamp-2"
+            >
+              {project.title}
+            </motion.h3>
+
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-gray-400 text-sm mb-4 flex-1 line-clamp-2"
+            >
+              {project.desc}
+            </motion.p>
+
+            {/* Features */}
+            {project.features && project.features.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="mb-4 space-y-2"
+              >
+                {project.features.slice(0, 2).map((feature, idx) => (
+                  <div key={idx} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex-shrink-0 mt-1" />
+                    <span className="text-gray-300 text-xs line-clamp-1">{feature}</span>
+                  </div>
+                ))}
+              </motion.div>
+            )}
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex gap-2 mt-auto"
+            >
+              <motion.a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              >
+                View Demo
+              </motion.a>
+
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex-1 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"
+              >
+                Details
+              </motion.button>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}

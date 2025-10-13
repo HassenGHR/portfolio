@@ -1,8 +1,26 @@
 import { motion } from "framer-motion";
-
 import Sidebar from "../sidebar/Sidebar"
 
 const Navbar = () => {
+  const navItems = ["Home", "Services", "Categories", "Skills", "Contact"];
+
+  const handleNavClick = (item) => {
+    if (item === "Categories") {
+      // Scroll to categories section
+      const categoriesSection = document.querySelector(".categories-section");
+      if (categoriesSection) {
+        categoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      // Default behavior for other items
+      const sectionId = item === "Home" ? "Homepage" : item;
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -42,20 +60,20 @@ const Navbar = () => {
             transition={{ delay: 0.3 }}
             className="hidden lg:flex items-center gap-8"
           >
-            {["Home", "Services", "Portfolio", "Skills", "Contact"].map((item, index) => (
-              <motion.a
+            {navItems.map((item, index) => (
+              <motion.button
                 key={item}
-                href={`#${item}`}
+                onClick={() => handleNavClick(item)}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * index }}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative text-gray-300 hover:text-white transition-colors font-medium group"
+                className="relative text-gray-300 hover:text-white transition-colors font-medium group bg-none border-none cursor-pointer"
               >
                 {item}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300" />
-              </motion.a>
+              </motion.button>
             ))}
           </motion.div>
 
@@ -66,19 +84,19 @@ const Navbar = () => {
             transition={{ delay: 0.4 }}
             className="hidden md:block"
           >
-            <motion.a
-              href="#Contact"
+            <motion.button
+              onClick={() => handleNavClick("Contact")}
               whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(168, 85, 247, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+              className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300 cursor-pointer border-none"
             >
               Let's Talk
-            </motion.a>
+            </motion.button>
           </motion.div>
 
           {/* Mobile Sidebar Toggle */}
           <div className="lg:hidden">
-            <Sidebar  />
+            <Sidebar />
           </div>
         </div>
       </div>

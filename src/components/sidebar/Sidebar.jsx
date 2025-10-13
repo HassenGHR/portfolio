@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Links from "../sidebar/links/Links";
 import ToggleButton from "../sidebar/toggleButton/ToggleButton";
 
 const sidebarVariants = {
@@ -25,6 +24,26 @@ const sidebarVariants = {
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
+
+  const navItems = ["Home", "Services", "Categories", "Skills", "Contact"];
+
+  const handleNavClick = (item) => {
+    if (item === "Categories") {
+      // Scroll to categories section
+      const categoriesSection = document.querySelector(".categories-section");
+      if (categoriesSection) {
+        categoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      // Default behavior for other items
+      const sectionId = item === "Home" ? "Homepage" : item;
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    setOpen(false);
+  };
 
   return (
     <>
@@ -79,8 +98,28 @@ const Sidebar = () => {
             </div>
 
             {/* Navigation Links */}
-            <div className="flex-1 overflow-y-auto">
-              <Links open={open} setOpen={setOpen} />
+            <div className="flex-1 overflow-y-auto p-8">
+              <motion.div
+                className="flex flex-col gap-4"
+                initial={{ opacity: 0 }}
+                animate={open ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                {navItems.map((item, index) => (
+                  <motion.button
+                    key={item}
+                    onClick={() => handleNavClick(item)}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={open ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                    transition={{ delay: 0.1 * index }}
+                    whileHover={{ x: 10 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-left text-gray-300 hover:text-white hover:translate-x-2 transition-all font-medium bg-none border-none cursor-pointer"
+                  >
+                    {item}
+                  </motion.button>
+                ))}
+              </motion.div>
             </div>
 
             {/* Footer - Social Links */}
