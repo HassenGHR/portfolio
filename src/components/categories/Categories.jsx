@@ -317,7 +317,7 @@ const Categories = () => {
         </motion.div>
 
         {/* Active Category Indicator */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="flex items-center justify-center gap-2 mb-12"
@@ -329,10 +329,10 @@ const Categories = () => {
           <span className="text-gray-400">
             ({filteredItems.length} {filteredItems.length === 1 ? 'project' : 'projects'})
           </span>
-        </motion.div>
+        </motion.div> */}
 
         {/* Projects Grid */}
-        <div ref={projectsRef}>
+        {/* <div ref={projectsRef}>
           {filteredItems.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredItems.map((project, index) => (
@@ -350,7 +350,7 @@ const Categories = () => {
               <p className="text-gray-400">Try selecting a different category</p>
             </motion.div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

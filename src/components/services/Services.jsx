@@ -150,7 +150,7 @@ const Services = () => {
             Business
           </h1>
           
-          <motion.button
+          {/* <motion.button
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 0 30px rgba(168, 85, 247, 0.5)",
@@ -159,7 +159,7 @@ const Services = () => {
             className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
           >
             WHAT WE DO?
-          </motion.button>
+          </motion.button> */}
         </motion.div>
 
         {/* Services Grid */}
@@ -237,7 +237,7 @@ const Services = () => {
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
+        {/* <motion.div
           variants={itemVariants}
           className="mt-20 text-center"
         >
@@ -254,7 +254,7 @@ const Services = () => {
           >
             Get Started Today
           </motion.button>
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </div>
   );

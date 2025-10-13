@@ -31,15 +31,16 @@ const App = () => {
         <Navbar />
         <Hero />
       </section>
+       <section id="Parallax">
+        <Parallax type="portfolio" />
+      </section>
+
 
       <section id="Services">
         <Services />
       </section>
 
-      <section id="Parallax">
-        <Parallax type="portfolio" />
-      </section>
-
+     
       <section id="Portfolio">
         <Categories onFilteredItems={setFilteredItems} />
         <Portfolio filteredItems={filteredItems} />
