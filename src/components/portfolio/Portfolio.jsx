@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 export default function PortfolioCarousel({ items, activeCategory }) {
@@ -15,6 +15,16 @@ export default function PortfolioCarousel({ items, activeCategory }) {
     }
   };
 
+  // Ensure we check scrollability on mount and when activeCategory changes
+  useEffect(() => {
+    checkScroll();
+    const onResize = () => checkScroll();
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, [activeCategory]);
+
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
       const scrollAmount = 400;
@@ -22,6 +32,8 @@ export default function PortfolioCarousel({ items, activeCategory }) {
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
       });
+      // Check scroll after animation
+      setTimeout(checkScroll, 500);
     }
   };
 
@@ -58,32 +70,32 @@ export default function PortfolioCarousel({ items, activeCategory }) {
                 {items.length} {items.length === 1 ? "project" : "projects"}
               </p>
             </div>
-
-            {/* Navigation Controls */}
-            <div className="flex items-center gap-3">
-              <motion.button
-                onClick={() => scroll('left')}
-                disabled={!canScrollLeft}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
-                ←
-              </motion.button>
-              <motion.button
-                onClick={() => scroll('right')}
-                disabled={!canScrollRight}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
-                →
-              </motion.button>
-            </div>
           </div>
 
           {/* Carousel Container */}
           <div className="relative">
+            {/* Arrow Navigation Overlays */}
+            {canScrollLeft && (
+              <motion.button
+                onClick={() => scroll('left')}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all text-2xl shadow-lg"
+              >
+                ←
+              </motion.button>
+            )}
+            {canScrollRight && (
+              <motion.button
+                onClick={() => scroll('right')}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all text-2xl shadow-lg"
+              >
+                →
+              </motion.button>
+            )}
+
             <motion.div
               ref={scrollContainerRef}
               onScroll={checkScroll}
@@ -96,6 +108,7 @@ export default function PortfolioCarousel({ items, activeCategory }) {
               style={{
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch',
               }}
             >
               {items && items.length > 0 ? (
@@ -124,33 +137,6 @@ export default function PortfolioCarousel({ items, activeCategory }) {
         </motion.div>
       </div>
 
-      {/* Bottom CTA */}
-      <div className="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto"
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-            Like what you see?
-          </h3>
-          <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg">
-            Let's create something amazing together
-          </p>
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 30px rgba(168, 85, 247, 0.5)",
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-purple-500/50 transition-all duration-300 text-sm sm:text-base"
-          >
-            Start a Project
-          </motion.button>
-        </motion.div>
-      </div>
     </div>
   );
 }

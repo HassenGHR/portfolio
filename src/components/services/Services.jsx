@@ -107,14 +107,7 @@ const Services = () => {
       >
         {/* Header Section */}
         <motion.div variants={itemVariants} className="text-center mb-12">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={isInView ? { scale: 1 } : { scale: 0 }}
-            transition={{ duration: 0.5, type: "spring" }}
-            className="inline-block mb-6"
-          >
-            <span className="text-6xl">👥</span>
-          </motion.div>
+      
           
           <p className="text-gray-400 text-lg md:text-xl mb-6 max-w-2xl mx-auto">
             I focus on helping your brand grow and move forward

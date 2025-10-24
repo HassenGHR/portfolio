@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
-import { services } from "../../constants";
+// Use canonical services metadata from data/Services.jsx (contains `category` keys)
+import { services } from "../../data/services";
 import { fadeIn } from "../../utils/motion";
 import "./CategoryBar.scss";
 import {
@@ -108,9 +109,11 @@ const CategoryBar = ({ onFilterChange }) => {
   useEffect(() => {
     onFilterChange(filteredItems);
   }, [filteredItems, onFilterChange]);
+
+  // Accept category key (e.g. 'all' or 'Web Development')
   const onCardClick = (category) => {
     const scrollPosition = 800;
-    if (category === "All projects") {
+    if (category === "all") {
       setFilteredItems(items);
     } else {
       const filtered = items.filter((item) => item.category === category);
@@ -130,7 +133,7 @@ const CategoryBar = ({ onFilterChange }) => {
         <div
           ref={scrollRef}
           key={index}
-          onClick={() => onCardClick(item.title)}
+          onClick={() => onCardClick(item.category)}
           className="categoryCard"
         >
           <Tilt className="tiltContainer xs:w-[250px] w-full">
@@ -143,7 +146,13 @@ const CategoryBar = ({ onFilterChange }) => {
                 }}
                 className="tiltFrame"
               >
-                <img src={item.icon} alt={item.title} className="imageTilt" />
+                {/* render icon: data/Services uses emoji strings, constants used image paths
+                    detect likely image path vs simple emoji string */}
+                {typeof item.icon === 'string' && (item.icon.startsWith('http') || item.icon.includes('/') || item.icon.includes('.')) ? (
+                  <img src={item.icon} alt={item.title} className="imageTilt" />
+                ) : (
+                  <div className="imageTilt text-3xl">{item.icon}</div>
+                )}
 
                 <h3 className="text">{item.title}</h3>
               </div>

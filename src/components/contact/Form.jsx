@@ -1,7 +1,12 @@
-import { useRef, useState,  } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import emailjs from '@emailjs/browser';
 
 export const ContactForm = () => {
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+  }, []);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -27,25 +32,24 @@ export const ContactForm = () => {
     setError("");
 
     try {
-      // Simulated API call - replace with your actual API endpoint
-      const apiUrl = "https://your-api-endpoint.com";
-      const response = await fetch(`${apiUrl}/submit-form`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      // Send the email using environment variables
+      const response = await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current
+      );
 
-      if (response.ok) {
-        setSuccess(true);
-        setForm({ name: "", email: "", message: "" });
-        setTimeout(() => setSuccess(false), 5000);
-      } else {
-        setError("Failed to send message. Please try again.");
-      }
+      console.log("Email sent successfully:", response);
+      setSuccess(true);
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setSuccess(false), 5000);
     } catch (error) {
-      setError("Network error. Please check your connection.");
+      console.error("EmailJS Error:", error);
+      if (error.text) {
+        setError(error.text);
+      } else {
+        setError("Failed to send message. Please check your email configuration.");
+      }
     } finally {
       setLoading(false);
     }
