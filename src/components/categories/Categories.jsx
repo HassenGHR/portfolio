@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { services } from "../../data/services";
+import { services } from "../../data/services.js";
 
 export default function Categories({ activeCategory, onCategorySelect, itemCount }) {
   return (
