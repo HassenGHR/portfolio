@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
-import { services } from "../../data/services.js";
 
 export default function Categories({ activeCategory, onCategorySelect, itemCount }) {
+  const services = [
+  { title: "All projects", icon: "🎯", category: "all" },
+  { title: "Web Development", icon: "💻", category: "Web Development" },
+  { title: "Data Analysis", icon: "📊", category: "Data Analysis" },
+  { title: "Python Developer", icon: "🐍", category: "Python Developer" },
+  { title: "Flutter Developer", icon: "📱", category: "Flutter Developer" },
+];
   return (
     <section className="categories-section relative py-20 px-6 overflow-hidden bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
