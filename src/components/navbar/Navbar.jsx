@@ -25,7 +25,9 @@ const Navbar = () => {
       <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/50" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        {/* gap guarantees breathing room between the four groups; without it
+            justify-between alone lets the avatar sit right against "Home" */}
+        <div className="flex items-center justify-between h-20 gap-6 lg:gap-10">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -75,7 +77,7 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35 }}
-            className="hidden md:flex items-center gap-1 ml-auto mr-4"
+            className="hidden md:flex items-center gap-1"
           >
             {socialLinks.map((social) => (
               <motion.a
