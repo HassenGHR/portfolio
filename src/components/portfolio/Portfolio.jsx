@@ -6,40 +6,7 @@ const isPrivate = (project) =>
 
 export default function PortfolioCarousel({ items }) {
   const carouselRef = useRef(null);
-  const scrollContainerRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
   const [selected, setSelected] = useState(null);
-
-  const checkScroll = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
-  };
-
-  // Ensure we check scrollability on mount and when the item list changes
-  useEffect(() => {
-    checkScroll();
-    const onResize = () => checkScroll();
-    window.addEventListener('resize', onResize);
-    return () => {
-      window.removeEventListener('resize', onResize);
-    };
-  }, [items]);
-
-  const scroll = (direction) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 400;
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-      // Check scroll after animation
-      setTimeout(checkScroll, 500);
-    }
-  };
 
   return (
     <div
@@ -76,68 +43,25 @@ export default function PortfolioCarousel({ items }) {
             </div>
           </div>
 
-          {/* Carousel Container */}
-          <div className="relative">
-            {/* Arrow Navigation Overlays */}
-            {canScrollLeft && (
-              <motion.button
-                onClick={() => scroll('left')}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all text-2xl shadow-lg"
-              >
-                ←
-              </motion.button>
-            )}
-            {canScrollRight && (
-              <motion.button
-                onClick={() => scroll('right')}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all text-2xl shadow-lg"
-              >
-                →
-              </motion.button>
-            )}
-
-            <motion.div
-              ref={scrollContainerRef}
-              onScroll={checkScroll}
-              onLoad={checkScroll}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-hide scroll-smooth"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitOverflowScrolling: 'touch',
-              }}
-            >
-              {items && items.length > 0 ? (
-                items.map((project, index) => (
-                  <CarouselCard
-                    key={`${project.id}-${index}`}
-                    project={project}
-                    index={index}
-                    onOpenDetails={() => setSelected(project)}
-                  />
-                ))
-              ) : (
-                <div className="w-full flex items-center justify-center py-20">
-                  <p className="text-2xl text-gray-400">No projects found</p>
-                </div>
-              )}
-            </motion.div>
-
-            {/* Gradient overlays */}
-            {canScrollLeft && (
-              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-900 to-transparent pointer-events-none" />
-            )}
-            {canScrollRight && (
-              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-900 to-transparent pointer-events-none" />
-            )}
-          </div>
+          {/* Cards flow down the page: one column on phones, widening with
+              the viewport. Replaced a horizontal scroller that hid most of
+              the work behind a swipe. */}
+          {items && items.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {items.map((project, index) => (
+                <CarouselCard
+                  key={`${project.id}-${index}`}
+                  project={project}
+                  index={index}
+                  onOpenDetails={() => setSelected(project)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="w-full flex items-center justify-center py-20">
+              <p className="text-2xl text-gray-400">No projects found</p>
+            </div>
+          )}
         </motion.div>
       </div>
 
@@ -158,10 +82,11 @@ function CarouselCard({ project, index, onOpenDetails }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 100 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.05 }}
-      className="flex-shrink-0 w-full md:w-96 snap-start"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.08 }}
+      className="w-full"
     >
       <div className="relative group h-full">
         <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 blur-xl group-hover:opacity-20 transition-opacity duration-500" />

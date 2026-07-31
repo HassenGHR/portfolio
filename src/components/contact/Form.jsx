@@ -2,10 +2,20 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import emailjs from '@emailjs/browser';
 
+// Vite inlines these at BUILD time. If they are not set in the build
+// environment they compile to `undefined`, and EmailJS then fails on every
+// submit with an unhelpful message. Detect that up front instead.
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const EMAIL_CONFIGURED = Boolean(SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY);
+
+const WHATSAPP_URL = "https://wa.me/213542761377";
+
 export const ContactForm = () => {
   // Initialize EmailJS
   useEffect(() => {
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+    if (EMAIL_CONFIGURED) emailjs.init(PUBLIC_KEY);
   }, []);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -28,14 +38,20 @@ export const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!EMAIL_CONFIGURED) {
+      setError(
+        "Email sending isn't configured on this deployment. Please reach me on WhatsApp instead."
+      );
+      return;
+    }
+
     setLoading(true);
     setError("");
 
     try {
-      // Send the email using environment variables
       const response = await emailjs.sendForm(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        SERVICE_ID,
+        TEMPLATE_ID,
         formRef.current
       );
 
@@ -127,6 +143,22 @@ export const ContactForm = () => {
                 className="w-full px-4 py-3 bg-slate-900/50 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all resize-none"
               />
             </motion.div>
+
+            {/* Fallback when the deployment has no EmailJS credentials */}
+            {!EMAIL_CONFIGURED && (
+              <div className="p-4 bg-amber-500/10 border border-amber-500/40 rounded-lg text-amber-200 text-sm">
+                Email sending isn&apos;t configured on this deployment.{" "}
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold underline underline-offset-2 hover:text-amber-100"
+                >
+                  Message me on WhatsApp
+                </a>{" "}
+                instead.
+              </div>
+            )}
 
             {/* Error Message */}
             {error && (

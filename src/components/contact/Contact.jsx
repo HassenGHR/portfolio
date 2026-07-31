@@ -4,7 +4,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
 import { ContactForm } from "./Form";
-import { IconLinkedIn, IconGitHub, IconDataCamp } from "../icons/Icons";
 
 // ===== STARS BACKGROUND COMPONENT =====
 const Stars = (props) => {
@@ -45,29 +44,6 @@ export const StarsCanvas = () => {
     </div>
   );
 };
-
-// ===== SOCIAL LINKS DATA =====
-const socialLinks = [
-  {
-    name: "LinkedIn",
-    url: import.meta.env.VITE_LINKEDIN_URL || "#",
-    icon: IconLinkedIn,
-    color: "from-blue-600 to-blue-800"
-  },
-  {
-    name: "GitHub",
-    url: import.meta.env.VITE_GITHUB_URL || "#",
-    icon: IconGitHub,
-    color: "from-gray-700 to-gray-900"
-  },
-  {
-    name: "DataCamp",
-    url: import.meta.env.VITE_DATACAMP_URL || "#",
-    icon: IconDataCamp,
-    color: "from-green-600 to-teal-700"
-  }
-];
-
 
 
 // ===== MAIN PAGE COMPONENT =====
@@ -134,35 +110,6 @@ const ContactPage = () => {
             <ContactForm />
           </motion.div>
 
-          {/* Social Links Section - Below Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="flex flex-col items-center"
-          >
-            <h3 className="text-white text-xl font-bold mb-8">Connect With Me</h3>
-            <div className="flex gap-6 flex-wrap justify-center">
-              {socialLinks.map((social, idx) => (
-                <motion.a
-                  key={idx}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="group"
-                >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${social.color} rounded-2xl flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300`}>
-                    <social.icon className="w-8 h-8" />
-                  </div>
-                  <div className="text-sm text-center mt-2 text-gray-400 group-hover:text-white transition-colors">
-                    {social.name}
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
         </div>
       </div>
     </div>

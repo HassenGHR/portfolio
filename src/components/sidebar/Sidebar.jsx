@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ToggleButton from "../sidebar/toggleButton/ToggleButton";
-import { IconLinkedIn, IconGitHub, IconDataCamp } from "../icons/Icons";
 import avatar from "../../assets/avatar.jpg";
+import { socialLinks } from "../../data/socialLinks";
 
 const sidebarVariants = {
   open: {
@@ -124,13 +124,9 @@ const Sidebar = () => {
             >
               <p className="text-gray-400 text-sm mb-4">Connect with me</p>
               <div className="flex gap-3">
-                {[
-                  { icon: IconLinkedIn, url: import.meta.env.VITE_LINKEDIN_URL || "#", name: "LinkedIn" },
-                  { icon: IconGitHub, url: import.meta.env.VITE_GITHUB_URL || "#", name: "GitHub" },
-                  { icon: IconDataCamp, url: import.meta.env.VITE_DATACAMP_URL || "#", name: "DataCamp" }
-                ].map((social, idx) => (
+                {socialLinks.map((social) => (
                   <motion.a
-                    key={idx}
+                    key={social.name}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"

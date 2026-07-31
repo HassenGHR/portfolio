@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Sidebar from "../sidebar/Sidebar"
 import avatar from "../../assets/avatar.jpg";
+import { socialLinks } from "../../data/socialLinks";
 
 const Navbar = () => {
   const navItems = ["Home", "Services", "Projects", "Skills", "Contact"];
@@ -66,6 +67,30 @@ const Navbar = () => {
                 {item}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300" />
               </motion.button>
+            ))}
+          </motion.div>
+
+          {/* Social links */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35 }}
+            className="hidden md:flex items-center gap-1 ml-auto mr-4"
+          >
+            {socialLinks.map((social) => (
+              <motion.a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                title={social.name}
+                whileHover={{ scale: 1.15, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className={`w-9 h-9 rounded-lg flex items-center justify-center text-gray-400 ${social.hover} transition-colors`}
+              >
+                <social.icon className="w-5 h-5" />
+              </motion.a>
             ))}
           </motion.div>
 
