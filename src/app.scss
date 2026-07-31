@@ -179,11 +179,16 @@ a {
   color: inherit;
 }
 
+// Inherited from the upstream template, where every section was a full-screen
+// scroll-snap panel. This site's sections hold tall content, so a fixed
+// `height: 100vh` plus `overflow: hidden` silently CLIPPED anything past one
+// viewport — over 1000px of the skills section on a short window, and worse the
+// shorter the screen, which is why it showed up first on phones.
+// `width: 100vw` also includes the scrollbar, so it forced ~15px of horizontal
+// page overflow. Sections now size to their content; the components inside
+// already declare their own `min-h-screen` where they want to fill the screen.
 section {
-  height: 100vh;
-  width: 100vw;
-  scroll-snap-align: center;
-  overflow: hidden;
+  width: 100%;
 }
 // ... Existing styles ...
 
@@ -211,16 +216,8 @@ section {
     @content;
   }
 }
-@media (max-width: 768px) {
-  .flex-col-reverse {
-    flex-direction: column-reverse;
-  }
-
-  .xl\:flex-row {
-    flex-direction: row !important;
-  }
-
-  .xl\:flex-1 {
-    flex: 1 1 0% !important;
-  }
-}
+// Removed a `@media (max-width: 768px)` block that forced `.xl\:flex-row` to
+// `flex-direction: row !important` and `.xl\:flex-1` to `flex: 1 !important`.
+// Those are Tailwind's ≥1280px classes, so the override inverted them on small
+// screens. No component uses either class, so it was dead — but it would have
+// broken the next layout that did.
