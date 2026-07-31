@@ -158,11 +158,17 @@ function CarouselCard({ project, index }) {
 
         <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl h-full flex flex-col hover:border-slate-600 transition-all duration-300">
           {/* Image Section */}
-          <motion.div className="relative overflow-hidden h-56 sm:h-64">
+          <motion.div
+            className={`relative overflow-hidden h-56 sm:h-64 ${
+              project.imgFit === "contain" ? "bg-slate-900" : ""
+            }`}
+          >
             <motion.img
               src={project.img}
               alt={project.title}
-              className="w-full h-full object-cover"
+              className={`w-full h-full ${
+                project.imgFit === "contain" ? "object-contain p-8" : "object-cover"
+              }`}
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.6 }}
             />
@@ -249,24 +255,44 @@ function CarouselCard({ project, index }) {
               transition={{ delay: 0.5 }}
               className="flex gap-2 mt-auto"
             >
-              <motion.a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-              >
-                View Demo
-              </motion.a>
+              {project.private || !project.demo || project.demo === "#" ? (
+                <span className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-700/40 border border-slate-600/60 text-slate-300 text-xs sm:text-sm font-semibold rounded-lg cursor-default">
+                  <svg
+                    className="w-3.5 h-3.5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Private — commercial project
+                </span>
+              ) : (
+                <motion.a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                >
+                  View Demo
+                </motion.a>
+              )}
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex-1 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"
-              >
-                Details
-              </motion.button>
+              {!project.private && (
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-1 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"
+                >
+                  Details
+                </motion.button>
+              )}
             </motion.div>
           </div>
         </div>

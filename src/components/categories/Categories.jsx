@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 export default function Categories({ activeCategory, onCategorySelect, itemCount }) {
   const services = [
   { title: "All projects", icon: "🎯", category: "all" },
+  { title: "Full-Stack", icon: "🧩", category: "Full-Stack" },
   { title: "Web Development", icon: "💻", category: "Web Development" },
   { title: "Data Analysis", icon: "📊", category: "Data Analysis" },
   { title: "Python Developer", icon: "🐍", category: "Python Developer" },
@@ -45,7 +46,7 @@ export default function Categories({ activeCategory, onCategorySelect, itemCount
         </motion.div>
 
         {/* Category Filter Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
           {services.map((service, index) => (
             <CategoryCardItem
               key={service.category}
@@ -73,20 +74,13 @@ export default function Categories({ activeCategory, onCategorySelect, itemCount
   );
 }
 
-const categoryGradients = [
-  "from-purple-500 to-pink-500",
-  "from-blue-500 to-cyan-500",
-  "from-green-500 to-emerald-500",
-  "from-orange-500 to-red-500",
-  "from-indigo-500 to-purple-500",
-];
-
 const categoryGradientClasses = {
   0: "bg-gradient-to-br from-purple-500 to-pink-500",
   1: "bg-gradient-to-br from-blue-500 to-cyan-500",
   2: "bg-gradient-to-br from-green-500 to-emerald-500",
   3: "bg-gradient-to-br from-orange-500 to-red-500",
   4: "bg-gradient-to-br from-indigo-500 to-purple-500",
+  5: "bg-gradient-to-br from-amber-500 to-orange-500",
 };
 
 const categoryBorderGradients = {
@@ -95,10 +89,11 @@ const categoryBorderGradients = {
   2: "bg-gradient-to-r from-green-500 to-emerald-500",
   3: "bg-gradient-to-r from-orange-500 to-red-500",
   4: "bg-gradient-to-r from-indigo-500 to-purple-500",
+  5: "bg-gradient-to-r from-amber-500 to-orange-500",
 };
 
 function CategoryCardItem({ service, index, isActive, onClick }) {
-  const gradientIdx = index % 5;
+  const gradientIdx = index % 6;
   const iconGradient = categoryGradientClasses[gradientIdx];
   const borderGradient = categoryBorderGradients[gradientIdx];
 
