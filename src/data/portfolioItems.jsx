@@ -3,6 +3,7 @@ import iraraDriver from "../assets/projects/irara-driver.png";
 import gmtentes from "../assets/projects/gmtentes.jpg";
 import gmBonPour from "../assets/projects/gmbonpour-app.jpg";
 import goldenStoreApp from "../assets/projects/goldenstore-app.jpg";
+import goldenStoreWeb from "../assets/projects/goldenstore-web.jpg";
 
 export const portfolioItems = [
   {
@@ -83,8 +84,8 @@ export const portfolioItems = [
     id: 1,
     title: "Golden Store — E-Commerce Platform",
     demo: "https://golden-store.store/",
-    desc: "An online store with a customer mobile app and an admin back office covering catalogue, stock, sales and marketing reporting.",
-    img: "https://images.unsplash.com/photo-1557821552-17105176677c?w=1200&h=800&fit=crop",
+    desc: "An Arabic-first online store for GPS trackers and electronics, with a customer mobile app and an admin back office covering catalogue, stock, sales and marketing reporting.",
+    img: goldenStoreWeb,
     category: "Full-Stack",
     tech: ["Flutter", "Next.js", "Supabase", "PostgreSQL"],
     features: [
