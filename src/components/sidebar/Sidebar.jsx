@@ -80,7 +80,7 @@ const Sidebar = () => {
                 transition={{ delay: 0.1 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg ring-1 ring-white/20">
+                <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg ring-1 ring-white/20">
                   <img src={avatar} alt="Hassen Goumghar" className="w-full h-full object-cover" />
                 </div>
                 <div>

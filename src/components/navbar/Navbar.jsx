@@ -35,7 +35,7 @@ const Navbar = () => {
             <motion.div
               whileHover={{ scale: 1.08 }}
               transition={{ duration: 0.3 }}
-              className="w-12 h-12 rounded-xl overflow-hidden shadow-lg ring-1 ring-white/20"
+              className="w-12 h-12 rounded-full overflow-hidden shadow-lg ring-1 ring-white/20"
             >
               <img src={avatar} alt="Hassen Goumghar" className="w-full h-full object-cover" />
             </motion.div>
