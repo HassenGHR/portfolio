@@ -64,26 +64,6 @@ const services = [
       "Feature-rich apps with Cloud DB & API integration"
     ],
   },
-  {
-    icon: "🐍",
-    title: "Python Development",
-    gradient: "from-green-500 to-emerald-500",
-    features: [
-      "Web scraping to extract data from websites",
-      "Custom Telegram bots with API integration",
-      "Machine learning models for enhanced decision-making"
-    ],
-  },
-  {
-    icon: "📊",
-    title: "Data Visualization",
-    gradient: "from-orange-500 to-red-500",
-    features: [
-      "Power BI interactive dashboards for actionable insights",
-      "Tableau dashboards connected to various data sources",
-      "Automated data analysis with Python & spreadsheets"
-    ],
-  },
 ];
 
 const Services = () => {
@@ -156,7 +136,7 @@ const Services = () => {
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto">
           {services.map((service, index) => (
             <motion.div
               key={index}
