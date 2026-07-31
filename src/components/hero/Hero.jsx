@@ -179,15 +179,15 @@ const Hero = () => {
               className="flex gap-8 mt-12 pt-8 border-t border-white/10"
             >
               <div>
-                <div className="text-3xl font-bold text-white mb-1">5+</div>
+                <div className="text-3xl font-bold text-white mb-1">3+</div>
                 <div className="text-sm text-gray-400">Years Experience</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-white mb-1">50+</div>
+                <div className="text-3xl font-bold text-white mb-1">10+</div>
                 <div className="text-sm text-gray-400">Projects Completed</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-white mb-1">30+</div>
+                <div className="text-3xl font-bold text-white mb-1">5+</div>
                 <div className="text-sm text-gray-400">Happy Clients</div>
               </div>
             </motion.div>

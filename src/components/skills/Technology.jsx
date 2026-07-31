@@ -205,7 +205,7 @@ const Tech = () => {
         >
           {[
             { number: `${technologies.length}+`, label: "Technologies", icon: IconRocket },
-            { number: "5+", label: "Years Experience", icon: IconClock },
+            { number: "3+", label: "Years Experience", icon: IconClock },
             { number: "100%", label: "Passion Driven", icon: IconHeart },
           ].map((stat, index) => (
             <motion.div
