@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 import { IconCode, IconSmartphone, IconRocket } from "../icons/Icons";
+import avatar from "../../assets/avatar.jpg";
 
 const textVariants = {
   initial: {
@@ -213,8 +214,12 @@ const Hero = () => {
               <div className="absolute -inset-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full blur-2xl opacity-30 animate-pulse" />
               
               <div className="relative w-80 h-80 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-xl rounded-full border border-white/10 flex items-center justify-center">
-                <div className="w-72 h-72 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white text-6xl font-bold shadow-2xl">
-                  H
+                <div className="w-72 h-72 rounded-full overflow-hidden shadow-2xl ring-2 ring-white/20">
+                  <img
+                    src={avatar}
+                    alt="Hassen Goumghar"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
 

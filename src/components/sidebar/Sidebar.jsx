@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ToggleButton from "../sidebar/toggleButton/ToggleButton";
 import { IconLinkedIn, IconGitHub, IconDataCamp } from "../icons/Icons";
+import avatar from "../../assets/avatar.jpg";
 
 const sidebarVariants = {
   open: {
@@ -79,8 +80,8 @@ const Sidebar = () => {
                 transition={{ delay: 0.1 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg">
-                  H
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg ring-1 ring-white/20">
+                  <img src={avatar} alt="Hassen Goumghar" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h2 className="text-white text-lg font-bold">Hassen</h2>

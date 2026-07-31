@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Sidebar from "../sidebar/Sidebar"
+import avatar from "../../assets/avatar.jpg";
 
 const Navbar = () => {
   const navItems = ["Home", "Services", "Projects", "Skills", "Contact"];
@@ -32,11 +33,11 @@ const Navbar = () => {
             className="flex items-center gap-3"
           >
             <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.6 }}
-              className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-lg"
+              whileHover={{ scale: 1.08 }}
+              transition={{ duration: 0.3 }}
+              className="w-12 h-12 rounded-xl overflow-hidden shadow-lg ring-1 ring-white/20"
             >
-              H
+              <img src={avatar} alt="Hassen Goumghar" className="w-full h-full object-cover" />
             </motion.div>
             <div className="hidden sm:block">
               <h1 className="text-white text-xl font-bold">Hassen</h1>
