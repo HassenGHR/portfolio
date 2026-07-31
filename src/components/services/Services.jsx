@@ -1,6 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { IconCode, IconSmartphone } from "../icons/Icons";
+import { IconCode, IconSmartphone, IconWhatsApp } from "../icons/Icons";
+import Modal from "../ui/Modal";
+
+const WHATSAPP_URL = "https://wa.me/213542761377";
 
 const containerVariants = {
   initial: { opacity: 0 },
@@ -54,6 +57,16 @@ const services = [
       "Real-time backends with Node.js, Fastify & PostgreSQL",
       "Database design, REST APIs and operations dashboards"
     ],
+    summary:
+      "I build the whole system, not just the screens — the customer-facing site, the API and database behind it, and the back office your team runs the business from. One person across the stack means no hand-offs and no feature that stops half-finished at an integration boundary.",
+    includes: [
+      "A storefront or web app users actually enjoy using",
+      "A REST API and database schema designed around your workflow",
+      "An admin back office: orders, stock, customers, reporting",
+      "Real-time features where they matter — live tracking, notifications",
+      "Deployment, environments and the operational bits that keep it up",
+    ],
+    examples: "Irara Express · GMTentes · Golden Store",
   },
   {
     icon: IconSmartphone,
@@ -64,12 +77,28 @@ const services = [
       "Responsive UI with local/Firebase integration",
       "Feature-rich apps with Cloud DB & API integration"
     ],
+    summary:
+      "One Flutter codebase covering Android, iOS and Windows desktop. I've taken apps the full distance — from first screen through store review to a live listing — including the parts that bite late: push notifications, offline behaviour, maps and release signing.",
+    includes: [
+      "Android and iOS from a single codebase, plus desktop where it helps",
+      "Offline-first data that syncs when the connection returns",
+      "Maps, live location and push notifications",
+      "Play Store release: signing, compliance and store listing",
+      "Multi-language and right-to-left layouts",
+    ],
+    examples: "Irara Drive · Golden Store app · GM Bon Pour desktop",
   },
 ];
 
 const Services = () => {
   const ref = useRef();
   const isInView = useInView(ref, { once: false, margin: "-100px" });
+  const [selected, setSelected] = useState(null);
+
+  const goToContact = () => {
+    setSelected(null);
+    document.getElementById("Contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div className="relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 py-20 overflow-hidden">
@@ -187,7 +216,9 @@ const Services = () => {
 
                 {/* Button */}
                 <motion.button
-                  whileHover={{ 
+                  type="button"
+                  onClick={() => setSelected(service)}
+                  whileHover={{
                     scale: 1.05,
                     x: 5,
                   }}
@@ -230,6 +261,83 @@ const Services = () => {
           </motion.button>
         </motion.div> */}
       </motion.div>
+
+      {selected && (
+        <Modal
+          onClose={() => setSelected(null)}
+          labelledBy="service-modal-title"
+          className="max-w-2xl"
+        >
+          <div className="p-6 sm:p-8">
+            <div className="flex items-center gap-4 mb-6 pr-10">
+              <div
+                className={`flex-shrink-0 inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br ${selected.gradient} rounded-xl text-white shadow-lg`}
+              >
+                <selected.icon className="w-7 h-7" />
+              </div>
+              <h3
+                id="service-modal-title"
+                className="text-2xl sm:text-3xl font-bold text-white"
+              >
+                {selected.title}
+              </h3>
+            </div>
+
+            <p className="text-gray-300 leading-relaxed mb-8">{selected.summary}</p>
+
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-purple-300 mb-3">
+              What you get
+            </h4>
+            <ul className="space-y-2.5 mb-8">
+              {selected.includes.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <svg
+                    className="w-5 h-5 flex-shrink-0 mt-0.5 text-purple-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  <span className="text-gray-300 text-sm">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            {selected.examples && (
+              <div className="mb-8">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-purple-300 mb-2">
+                  Built this way
+                </h4>
+                <p className="text-gray-400 text-sm">{selected.examples}</p>
+              </div>
+            )}
+
+            <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={goToContact}
+                className={`flex-1 inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r ${selected.gradient} text-white text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300`}
+              >
+                Start a project
+              </button>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white text-sm font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"
+              >
+                <IconWhatsApp className="w-4 h-4" />
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

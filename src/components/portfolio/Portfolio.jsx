@@ -1,5 +1,6 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import Modal from "../ui/Modal";
 
 const isPrivate = (project) =>
   Boolean(project.private) || !project.demo || project.demo === "#";
@@ -242,65 +243,11 @@ function LockIcon({ className = "w-3.5 h-3.5" }) {
 }
 
 function ProjectModal({ project, onClose }) {
-  const closeRef = useRef(null);
   const titleId = `project-title-${project.id}`;
 
-  // Held in a ref so the effect below can run once per mount. Depending on
-  // `onClose` directly would re-run it on every parent render, and the cleanup
-  // would then capture "hidden" as the overflow to restore.
-  const onCloseRef = useRef(onClose);
-  useEffect(() => {
-    onCloseRef.current = onClose;
-  }, [onClose]);
-
-  // Close on Escape, and stop the page behind from scrolling while open.
-  useEffect(() => {
-    const onKeyDown = (e) => {
-      if (e.key === "Escape") onCloseRef.current();
-    };
-    document.addEventListener("keydown", onKeyDown);
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    closeRef.current?.focus();
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previousOverflow;
-    };
-  }, []);
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2 }}
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
-    >
-      <motion.div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
-        onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl"
-      >
-        <button
-          ref={closeRef}
-          type="button"
-          onClick={onClose}
-          aria-label="Close details"
-          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-slate-900/80 backdrop-blur-sm border border-slate-600 text-slate-300 hover:text-white hover:border-slate-400 transition-colors flex items-center justify-center"
-        >
-          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <path d="M18 6 6 18M6 6l12 12" />
-          </svg>
-        </button>
-
+    <Modal onClose={onClose} labelledBy={titleId} className="max-w-2xl">
+      <>
         <div className={`relative h-48 sm:h-56 overflow-hidden ${project.imgFit === "contain" ? "bg-slate-950" : ""}`}>
           <img
             src={project.img}
@@ -372,7 +319,7 @@ function ProjectModal({ project, onClose }) {
             )}
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </>
+    </Modal>
   );
 }
