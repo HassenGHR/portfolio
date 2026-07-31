@@ -6,6 +6,9 @@ per-project detail modals, skills, and a contact form.
 Built with Vite + React, styled with Tailwind and SCSS, animated with
 Framer Motion, with a Three.js starfield behind the contact section.
 
+Started as a fork of [safak/animated-portfolio](https://github.com/safak/animated-portfolio)
+— see [Credits](#credits).
+
 ---
 
 ## Running it
@@ -99,7 +102,7 @@ artwork so it is not cropped by the default `object-cover`.
 Skill entries are in `src/components/skills/Technology.jsx`, and the
 "technologies" counter derives from the length of that list. Brand logos are
 vendored as SVGs in `src/assets/tech/` (Devicon, ISC) — nothing is fetched from
-a CDN at runtime.
+a CDN at runtime. Devicon is MIT licensed.
 
 UI and social icons are inline SVG React components in
 `src/components/icons/Icons.jsx` (outlines from Lucide, ISC; brand marks from
@@ -146,3 +149,23 @@ first.
 Icons in `public/` (`favicon-32.png`, `favicon-192.png`,
 `apple-touch-icon.png`) are copied to the build root as-is. Favicons cache
 hard — expect to need a fresh tab after changing one.
+
+---
+
+## Credits
+
+Forked from **[safak/animated-portfolio](https://github.com/safak/animated-portfolio)**
+by [Safak](https://github.com/safak) (Lama Dev), which is the origin of the
+scroll and parallax animation work, the custom cursor, and the sidebar and
+navbar structure. The root commit of this repository is his.
+
+Everything since is this site's own: the project data model and details modal,
+the services and skills sections, the icon set, and the content.
+
+Third-party assets vendored into the repo:
+
+| Asset | Source | Licence |
+| --- | --- | --- |
+| Technology logos (`src/assets/tech/`) | [Devicon](https://github.com/devicons/devicon) | MIT |
+| Outline icons (`components/icons/`) | [Lucide](https://lucide.dev) | ISC |
+| Brand marks — LinkedIn, GitHub, DataCamp, Odoo | [Simple Icons](https://simpleicons.org) | CC0 |
