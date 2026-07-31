@@ -5,8 +5,6 @@ export default function Categories({ activeCategory, onCategorySelect, itemCount
   { title: "All projects", icon: "🎯", category: "all" },
   { title: "Full-Stack", icon: "🧩", category: "Full-Stack" },
   { title: "Web Development", icon: "💻", category: "Web Development" },
-  { title: "Data Analysis", icon: "📊", category: "Data Analysis" },
-  { title: "Python Developer", icon: "🐍", category: "Python Developer" },
   { title: "Flutter Developer", icon: "📱", category: "Flutter Developer" },
 ];
   return (
@@ -46,7 +44,7 @@ export default function Categories({ activeCategory, onCategorySelect, itemCount
         </motion.div>
 
         {/* Category Filter Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 mb-8">
           {services.map((service, index) => (
             <CategoryCardItem
               key={service.category}
