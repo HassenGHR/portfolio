@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ToggleButton from "../sidebar/toggleButton/ToggleButton";
+import { IconLinkedIn, IconGitHub, IconDataCamp } from "../icons/Icons";
 
 const sidebarVariants = {
   open: {
@@ -123,18 +124,21 @@ const Sidebar = () => {
               <p className="text-gray-400 text-sm mb-4">Connect with me</p>
               <div className="flex gap-3">
                 {[
-                  { icon: "💼", url: "#", name: "LinkedIn" },
-                  { icon: "💻", url: "#", name: "GitHub" },
-                  { icon: "📊", url: "#", name: "DataCamp" }
+                  { icon: IconLinkedIn, url: import.meta.env.VITE_LINKEDIN_URL || "#", name: "LinkedIn" },
+                  { icon: IconGitHub, url: import.meta.env.VITE_GITHUB_URL || "#", name: "GitHub" },
+                  { icon: IconDataCamp, url: import.meta.env.VITE_DATACAMP_URL || "#", name: "DataCamp" }
                 ].map((social, idx) => (
                   <motion.a
                     key={idx}
                     href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-12 h-12 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg flex items-center justify-center text-xl hover:border-slate-600 transition-colors"
+                    className="w-12 h-12 bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:border-slate-600 transition-colors"
                   >
-                    {social.icon}
+                    <social.icon className="w-5 h-5" />
                   </motion.a>
                 ))}
               </div>

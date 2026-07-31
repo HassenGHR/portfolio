@@ -32,12 +32,12 @@ const App = () => {
         <Hero />
       </section>
 
-      <section id="Parallax">
-        <Parallax type="portfolio" />
-      </section>
-
       <section id="Services">
         <Services />
+      </section>
+
+      <section id="Parallax">
+        <Parallax type="portfolio" />
       </section>
 
       <section id="Portfolio">

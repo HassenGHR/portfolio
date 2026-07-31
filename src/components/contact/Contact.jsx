@@ -4,6 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
 import { ContactForm } from "./Form";
+import { IconLinkedIn, IconGitHub, IconDataCamp } from "../icons/Icons";
 
 // ===== STARS BACKGROUND COMPONENT =====
 const Stars = (props) => {
@@ -50,19 +51,19 @@ const socialLinks = [
   {
     name: "LinkedIn",
     url: import.meta.env.VITE_LINKEDIN_URL,
-    icon: "💼",
+    icon: IconLinkedIn,
     color: "from-blue-600 to-blue-800"
   },
   {
     name: "GitHub",
     url: import.meta.env.VITE_GITHUB_URL,
-    icon: "💻",
+    icon: IconGitHub,
     color: "from-gray-700 to-gray-900"
   },
   {
     name: "DataCamp",
     url: import.meta.env.VITE_DATACAMP_URL,
-    icon: "📊",
+    icon: IconDataCamp,
     color: "from-green-600 to-teal-700"
   }
 ];
@@ -152,8 +153,8 @@ const ContactPage = () => {
                   whileTap={{ scale: 0.95 }}
                   className="group"
                 >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${social.color} rounded-2xl flex items-center justify-center text-2xl shadow-lg hover:shadow-xl transition-all duration-300`}>
-                    {social.icon}
+                  <div className={`w-16 h-16 bg-gradient-to-br ${social.color} rounded-2xl flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300`}>
+                    <social.icon className="w-8 h-8" />
                   </div>
                   <div className="text-sm text-center mt-2 text-gray-400 group-hover:text-white transition-colors">
                     {social.name}

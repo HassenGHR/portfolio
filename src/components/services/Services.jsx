@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { IconCode, IconSmartphone } from "../icons/Icons";
 
 const containerVariants = {
   initial: { opacity: 0 },
@@ -45,7 +46,7 @@ const cardVariants = {
 
 const services = [
   {
-    icon: "💻",
+    icon: IconCode,
     title: "Full Stack Development",
     gradient: "from-blue-500 to-cyan-500",
     features: [
@@ -55,7 +56,7 @@ const services = [
     ],
   },
   {
-    icon: "📱",
+    icon: IconSmartphone,
     title: "Flutter App Development",
     gradient: "from-purple-500 to-pink-500",
     features: [
@@ -158,8 +159,8 @@ const Services = () => {
                   whileHover={{ rotate: 360, scale: 1.2 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <div className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br ${service.gradient} rounded-xl text-xl shadow-lg`}>
-                    {service.icon}
+                  <div className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br ${service.gradient} rounded-xl text-white shadow-lg`}>
+                    <service.icon className="w-6 h-6" />
                   </div>
                 </motion.div>
 

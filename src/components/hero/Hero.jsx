@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
+import { IconCode, IconSmartphone, IconRocket } from "../icons/Icons";
 
 const textVariants = {
   initial: {
@@ -230,7 +231,7 @@ const Hero = () => {
                   ease: "easeInOut",
                 }}
               >
-                <span className="text-2xl">💻</span>
+                <IconCode className="w-7 h-7 text-white" />
               </motion.div>
 
               <motion.div
@@ -246,7 +247,7 @@ const Hero = () => {
                   delay: 0.5,
                 }}
               >
-                <span className="text-2xl">📊</span>
+                <IconSmartphone className="w-7 h-7 text-white" />
               </motion.div>
 
               <motion.div
@@ -262,7 +263,7 @@ const Hero = () => {
                   delay: 1,
                 }}
               >
-                <span className="text-2xl">🚀</span>
+                <IconRocket className="w-7 h-7 text-white" />
               </motion.div>
             </motion.div>
           </motion.div>

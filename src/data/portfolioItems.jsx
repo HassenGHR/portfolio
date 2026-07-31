@@ -1,7 +1,7 @@
 import iraraClient from "../assets/projects/irara-client.png";
 import iraraDriver from "../assets/projects/irara-driver.png";
 import gmtentes from "../assets/projects/gmtentes.jpg";
-import gmBonPour from "../assets/projects/gmbonpour.png";
+import gmBonPour from "../assets/projects/gmbonpour-app.jpg";
 import goldenStoreApp from "../assets/projects/goldenstore-app.jpg";
 
 export const portfolioItems = [
@@ -71,7 +71,6 @@ export const portfolioItems = [
     private: true,
     desc: "A Windows desktop back office for a retail business, built in Flutter. Every add and edit form opens as its own native window so staff can work across several records at once.",
     img: gmBonPour,
-    imgFit: "contain",
     category: "Full-Stack",
     tech: ["Flutter", "Dart", "Supabase", "PostgreSQL"],
     features: [

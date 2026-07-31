@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { IconLightbulb, IconRocket, IconClock, IconHeart } from "../icons/Icons";
 
 import flutterIcon from "../../assets/tech/flutter.svg";
 import dartIcon from "../../assets/tech/dart.svg";
@@ -151,8 +152,8 @@ const Tech = () => {
             transition={{ duration: 0.8, type: "spring" }}
             className="inline-block mb-6"
           >
-            <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-4xl shadow-2xl">
-              💡
+            <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white shadow-2xl">
+              <IconLightbulb className="w-10 h-10" />
             </div>
           </motion.div>
 
@@ -203,9 +204,9 @@ const Tech = () => {
           className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {[
-            { number: `${technologies.length}+`, label: "Technologies", icon: "🚀" },
-            { number: "5+", label: "Years Experience", icon: "⏱️" },
-            { number: "100%", label: "Passion Driven", icon: "💯" },
+            { number: `${technologies.length}+`, label: "Technologies", icon: IconRocket },
+            { number: "5+", label: "Years Experience", icon: IconClock },
+            { number: "100%", label: "Passion Driven", icon: IconHeart },
           ].map((stat, index) => (
             <motion.div
               key={index}
@@ -215,7 +216,9 @@ const Tech = () => {
               <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-20 blur transition duration-500" />
               
               <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 text-center hover:border-slate-600 transition-colors">
-                <div className="text-4xl mb-4">{stat.icon}</div>
+                <div className="flex justify-center mb-4 text-purple-300">
+                  <stat.icon className="w-9 h-9" />
+                </div>
                 <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
                   {stat.number}
                 </div>
