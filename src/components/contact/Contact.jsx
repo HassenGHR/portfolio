@@ -50,19 +50,19 @@ export const StarsCanvas = () => {
 const socialLinks = [
   {
     name: "LinkedIn",
-    url: import.meta.env.VITE_LINKEDIN_URL,
+    url: import.meta.env.VITE_LINKEDIN_URL || "#",
     icon: IconLinkedIn,
     color: "from-blue-600 to-blue-800"
   },
   {
     name: "GitHub",
-    url: import.meta.env.VITE_GITHUB_URL,
+    url: import.meta.env.VITE_GITHUB_URL || "#",
     icon: IconGitHub,
     color: "from-gray-700 to-gray-900"
   },
   {
     name: "DataCamp",
-    url: import.meta.env.VITE_DATACAMP_URL,
+    url: import.meta.env.VITE_DATACAMP_URL || "#",
     icon: IconDataCamp,
     color: "from-green-600 to-teal-700"
   }
