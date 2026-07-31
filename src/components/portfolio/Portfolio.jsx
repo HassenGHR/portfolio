@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
-export default function PortfolioCarousel({ items, activeCategory }) {
+export default function PortfolioCarousel({ items }) {
   const carouselRef = useRef(null);
   const scrollContainerRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -15,7 +15,7 @@ export default function PortfolioCarousel({ items, activeCategory }) {
     }
   };
 
-  // Ensure we check scrollability on mount and when activeCategory changes
+  // Ensure we check scrollability on mount and when the item list changes
   useEffect(() => {
     checkScroll();
     const onResize = () => checkScroll();
@@ -23,7 +23,7 @@ export default function PortfolioCarousel({ items, activeCategory }) {
     return () => {
       window.removeEventListener('resize', onResize);
     };
-  }, [activeCategory]);
+  }, [items]);
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -100,7 +100,6 @@ export default function PortfolioCarousel({ items, activeCategory }) {
               ref={scrollContainerRef}
               onScroll={checkScroll}
               onLoad={checkScroll}
-              key={`carousel-${activeCategory}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}

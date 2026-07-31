@@ -25,22 +25,13 @@ const sidebarVariants = {
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
 
-  const navItems = ["Home", "Services", "Categories", "Skills", "Contact"];
+  const navItems = ["Home", "Services", "Projects", "Skills", "Contact"];
 
   const handleNavClick = (item) => {
-    if (item === "Categories") {
-      // Scroll to categories section
-      const categoriesSection = document.querySelector(".categories-section");
-      if (categoriesSection) {
-        categoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    } else {
-      // Default behavior for other items
-      const sectionId = item === "Home" ? "Homepage" : item;
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+    const sectionId = item === "Home" ? "Homepage" : item === "Projects" ? "Portfolio" : item;
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     setOpen(false);
   };

@@ -134,10 +134,10 @@ const Hero = () => {
               variants={itemVariants}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
             >
-              Software Developer
+              Full-Stack
               <br />
               <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                & Data Enthusiast
+                & Mobile Developer
               </span>
             </motion.h1>
 
@@ -145,7 +145,8 @@ const Hero = () => {
               variants={itemVariants}
               className="text-gray-300 text-lg mb-8 max-w-xl"
             >
-              Crafting innovative solutions through code and transforming data into actionable insights.
+              I build production platforms end to end — cross-platform mobile apps,
+              real-time backends and the web dashboards that run them.
             </motion.p>
 
             <motion.div

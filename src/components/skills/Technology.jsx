@@ -1,24 +1,44 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-// Mock technologies data - replace with your actual imports
+import flutterIcon from "../../assets/tech/flutter.svg";
+import dartIcon from "../../assets/tech/dart.svg";
+import reactIcon from "../../assets/tech/react.svg";
+import nextjsIcon from "../../assets/tech/nextjs.svg";
+import typescriptIcon from "../../assets/tech/typescript.svg";
+import javascriptIcon from "../../assets/tech/javascript.svg";
+import nodejsIcon from "../../assets/tech/nodejs.svg";
+import fastifyIcon from "../../assets/tech/fastify.svg";
+import postgresqlIcon from "../../assets/tech/postgresql.svg";
+import supabaseIcon from "../../assets/tech/supabase.svg";
+import firebaseIcon from "../../assets/tech/firebase.svg";
+import sqliteIcon from "../../assets/tech/sqlite.svg";
+import redisIcon from "../../assets/tech/redis.svg";
+import odooIcon from "../../assets/tech/odoo.svg";
+import dockerIcon from "../../assets/tech/docker.svg";
+import tailwindIcon from "../../assets/tech/tailwindcss.svg";
+import gitIcon from "../../assets/tech/git.svg";
+
+// Kept in step with the stacks actually used by the projects above.
+// `color` only drives the hover glow — the marks are the real brand logos.
 const technologies = [
-  { name: "HTML", icon: "🌐", color: "from-orange-500 to-red-500" },
-  { name: "CSS", icon: "🎨", color: "from-blue-500 to-cyan-500" },
-  { name: "JavaScript", icon: "⚡", color: "from-yellow-500 to-orange-500" },
-  { name: "React", icon: "⚛️", color: "from-cyan-500 to-blue-500" },
-  { name: "Node.js", icon: "🟢", color: "from-green-500 to-emerald-500" },
-  { name: "Python", icon: "🐍", color: "from-blue-600 to-yellow-500" },
-  { name: "Django", icon: "🎯", color: "from-green-600 to-teal-500" },
-  { name: "MongoDB", icon: "🍃", color: "from-green-500 to-lime-500" },
-  { name: "PostgreSQL", icon: "🐘", color: "from-blue-600 to-indigo-500" },
-  { name: "Git", icon: "📦", color: "from-orange-600 to-red-600" },
-  { name: "Docker", icon: "🐳", color: "from-blue-500 to-cyan-600" },
-  { name: "AWS", icon: "☁️", color: "from-orange-500 to-yellow-500" },
-  { name: "Flutter", icon: "📱", color: "from-blue-400 to-cyan-400" },
-  { name: "TypeScript", icon: "💙", color: "from-blue-600 to-indigo-600" },
-  { name: "Next.js", icon: "▲", color: "from-slate-700 to-slate-900" },
-  { name: "Tailwind", icon: "💨", color: "from-cyan-500 to-blue-600" },
+  { name: "Flutter", icon: flutterIcon, color: "from-blue-400 to-cyan-400" },
+  { name: "Dart", icon: dartIcon, color: "from-sky-500 to-blue-600" },
+  { name: "React", icon: reactIcon, color: "from-cyan-500 to-blue-500" },
+  { name: "Next.js", icon: nextjsIcon, color: "from-slate-500 to-slate-700" },
+  { name: "TypeScript", icon: typescriptIcon, color: "from-blue-600 to-indigo-600" },
+  { name: "JavaScript", icon: javascriptIcon, color: "from-yellow-500 to-orange-500" },
+  { name: "Node.js", icon: nodejsIcon, color: "from-green-500 to-emerald-500" },
+  { name: "Fastify", icon: fastifyIcon, color: "from-slate-400 to-slate-600" },
+  { name: "PostgreSQL", icon: postgresqlIcon, color: "from-blue-600 to-indigo-500" },
+  { name: "Supabase", icon: supabaseIcon, color: "from-emerald-500 to-green-600" },
+  { name: "Firebase", icon: firebaseIcon, color: "from-amber-500 to-orange-600" },
+  { name: "SQLite", icon: sqliteIcon, color: "from-sky-600 to-blue-700" },
+  { name: "Redis", icon: redisIcon, color: "from-red-500 to-rose-600" },
+  { name: "Odoo", icon: odooIcon, color: "from-purple-600 to-violet-700" },
+  { name: "Docker", icon: dockerIcon, color: "from-blue-500 to-cyan-600" },
+  { name: "Tailwind", icon: tailwindIcon, color: "from-cyan-500 to-blue-600" },
+  { name: "Git", icon: gitIcon, color: "from-orange-600 to-red-600" },
 ];
 
 const containerVariants = {
@@ -66,15 +86,18 @@ const SkillBall = ({ technology, index }) => {
         />
         
         {/* Main ball */}
-        <div className={`relative w-24 h-24 rounded-full bg-gradient-to-br ${technology.color} flex items-center justify-center shadow-2xl border-4 border-white/10`}>
+        <div className="relative w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center shadow-2xl border-4 border-white/10">
           {/* Inner glow */}
-          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
-          
-          {/* Icon */}
-          <span className="relative text-4xl z-10 filter drop-shadow-lg">
-            {technology.icon}
-          </span>
-          
+          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-white/10 to-transparent" />
+
+          {/* Brand mark */}
+          <img
+            src={technology.icon}
+            alt={technology.name}
+            loading="lazy"
+            className="relative z-10 w-12 h-12 object-contain drop-shadow-lg"
+          />
+
           {/* Shine effect */}
           <motion.div
             className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -180,7 +203,7 @@ const Tech = () => {
           className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {[
-            { number: "16+", label: "Technologies", icon: "🚀" },
+            { number: `${technologies.length}+`, label: "Technologies", icon: "🚀" },
             { number: "5+", label: "Years Experience", icon: "⏱️" },
             { number: "100%", label: "Passion Driven", icon: "💯" },
           ].map((stat, index) => (

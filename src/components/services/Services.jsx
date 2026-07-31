@@ -49,9 +49,9 @@ const services = [
     title: "Full Stack Development",
     gradient: "from-blue-500 to-cyan-500",
     features: [
-      "Modern UIs, SPA development with React & Next.js",
-      "Backend development with Django & Django REST Framework",
-      "Database design, management & RESTful API creation"
+      "Modern UIs and web apps with React & Next.js",
+      "Real-time backends with Node.js, Fastify & PostgreSQL",
+      "Database design, REST APIs and operations dashboards"
     ],
   },
   {
