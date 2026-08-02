@@ -97,8 +97,7 @@ export const portfolioItems = [
   {
     id: 9,
     title: "Golden Store — Shopping App",
-    demo: "#",
-    private: true,
+    demo: "https://play.google.com/store/apps/details?id=app.hysic.golden_store",
     desc: "The Golden Store customer app, built in Flutter with clean architecture. Offline-first: the catalogue, cart and orders work from a local database and sync to the cloud when a connection returns.",
     img: goldenStoreApp,
     imgFit: "contain",
