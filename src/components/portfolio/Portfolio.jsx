@@ -2,8 +2,31 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Modal from "../ui/Modal";
 
+const hasDemo = (project) => Boolean(project.demo) && project.demo !== "#";
+
+// A store listing counts as public access even when there is no live site.
 const isPrivate = (project) =>
-  Boolean(project.private) || !project.demo || project.demo === "#";
+  Boolean(project.private) || (!hasDemo(project) && !project.store);
+
+const projectLinks = (project) => {
+  const links = [];
+  if (hasDemo(project)) {
+    links.push({
+      href: project.demo,
+      label: "View Demo",
+      longLabel: "Visit the live site",
+    });
+  }
+  if (project.store) {
+    links.push({
+      href: project.store,
+      label: "Google Play",
+      longLabel: "Get it on Google Play",
+      icon: <PlayStoreIcon />,
+    });
+  }
+  return links;
+};
 
 export default function PortfolioCarousel({ items }) {
   const carouselRef = useRef(null);
@@ -191,33 +214,46 @@ function CarouselCard({ project, index, onOpenDetails }) {
               transition={{ delay: 0.5 }}
               className="mt-auto space-y-2"
             >
-              {isPrivate(project) ? (
+              {project.status ? (
+                <span className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-200 text-xs font-semibold rounded-lg cursor-default">
+                  <PlayStoreIcon />
+                  {project.status}
+                </span>
+              ) : isPrivate(project) ? (
                 <span className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-slate-700/40 border border-slate-600/60 text-slate-300 text-xs font-semibold rounded-lg cursor-default">
                   <LockIcon />
                   Private — commercial project
                 </span>
               ) : null}
 
-              <div className="flex gap-2">
-                {!isPrivate(project) && (
+              {/* Wraps: a project with both a live site and a store listing gets
+                  two readable buttons per row rather than three cramped ones. */}
+              <div className="flex flex-wrap gap-2">
+                {projectLinks(project).map((link, linkIdx) => (
                   <motion.a
-                    href={project.demo}
+                    key={link.href}
+                    href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs sm:text-sm font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
+                    className={`flex-1 min-w-[45%] inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-300 ${
+                      linkIdx === 0
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-purple-500/50"
+                        : "bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20"
+                    }`}
                   >
-                    View Demo
+                    {link.icon}
+                    {link.label}
                   </motion.a>
-                )}
+                ))}
 
                 <motion.button
                   type="button"
                   onClick={onOpenDetails}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex-1 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"
+                  className="flex-1 min-w-[45%] px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs sm:text-sm font-semibold rounded-lg hover:bg-white/20 transition-all duration-300"
                 >
                   Details
                 </motion.button>
@@ -236,6 +272,18 @@ function LockIcon({ className = "w-3.5 h-3.5" }) {
       <path
         fillRule="evenodd"
         d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+function PlayStoreIcon({ className = "w-3.5 h-3.5" }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <path
+        fillRule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.6 6.4l5.2 3.6-5.2 3.6V6.4z"
         clipRule="evenodd"
       />
     </svg>
@@ -301,21 +349,40 @@ function ProjectModal({ project, onClose }) {
             </div>
           )}
 
-          <div className="pt-4 border-t border-slate-800">
-            {isPrivate(project) ? (
+          <div className="pt-4 border-t border-slate-800 space-y-4">
+            {project.status && (
+              <p className="flex items-center gap-2 text-emerald-200 text-sm">
+                <PlayStoreIcon className="w-4 h-4 flex-shrink-0" />
+                {project.status} — open to invited testers only.
+              </p>
+            )}
+
+            {isPrivate(project) && !project.status && (
               <p className="flex items-center gap-2 text-slate-400 text-sm">
                 <LockIcon className="w-4 h-4 flex-shrink-0" />
                 Private commercial project — source and live access are not public.
               </p>
-            ) : (
-              <a
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-semibold rounded-lg shadow-lg hover:shadow-purple-500/50 transition-all duration-300"
-              >
-                Visit the live site
-              </a>
+            )}
+
+            {projectLinks(project).length > 0 && (
+              <div className="flex flex-wrap gap-3">
+                {projectLinks(project).map((link, linkIdx) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition-all duration-300 ${
+                      linkIdx === 0
+                        ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-purple-500/50"
+                        : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
+                    }`}
+                  >
+                    {link.icon}
+                    {link.longLabel}
+                  </a>
+                ))}
+              </div>
             )}
           </div>
         </div>

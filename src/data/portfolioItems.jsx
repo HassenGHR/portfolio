@@ -4,12 +4,15 @@ import gmtentes from "../assets/projects/gmtentes.jpg";
 import gmBonPour from "../assets/projects/gmbonpour-app.jpg";
 import goldenStoreApp from "../assets/projects/goldenstore-app.jpg";
 import goldenStoreWeb from "../assets/projects/goldenstore-web.jpg";
+import oasisClient from "../assets/projects/oasis-client.jpg";
+import oasisAdmin from "../assets/projects/oasis-admin.jpg";
 
 export const portfolioItems = [
   {
     id: 11,
     title: "Irara Express — Delivery Marketplace",
     demo: "https://iraraexpress.com/",
+    store: "https://play.google.com/store/apps/details?id=com.iraraexpress.client",
     desc: "A nationwide parcel-delivery marketplace: customers book a delivery, nearby drivers bid on it, and both sides follow the courier live on a map. Spans two mobile apps, a real-time backend and an operations back office.",
     img: iraraClient,
     category: "Full-Stack",
@@ -25,7 +28,7 @@ export const portfolioItems = [
     id: 12,
     title: "Irara Drive — Courier App",
     demo: "#",
-    private: true,
+    store: "https://play.google.com/store/apps/details?id=com.iraraexpress.driver",
     desc: "The driver side of the marketplace: couriers go online, receive nearby jobs, bid, navigate multi-stop routes and track their earnings. Published on Google Play.",
     img: iraraDriver,
     category: "Flutter Developer",
@@ -34,6 +37,40 @@ export const portfolioItems = [
       "Push-driven job offers with route preview",
       "Multi-stop navigation and per-parcel handling",
       "Earnings dashboard and cash reconciliation",
+    ],
+  },
+  {
+    id: 16,
+    title: "Oasis Delivery — Customer App",
+    demo: "#",
+    private: true,
+    status: "In closed testing on Google Play",
+    desc: "A wholesale ordering app for tea shops and cafés in Algiers, Blida and Boumerdès: browse sweets and beverages by category, pin the shop on the map and order in a few taps. Arabic, French and English, cash on delivery.",
+    img: oasisClient,
+    category: "Flutter Developer",
+    tech: ["Flutter", "Bloc", "Firebase", "Cloud Firestore", "Google Maps"],
+    features: [
+      "Category catalogue with saved favourites",
+      "Map-pinned delivery addresses, saved and reused",
+      "Live order status and full order history",
+      "Arabic, French and English with push notifications",
+    ],
+  },
+  {
+    id: 17,
+    title: "Oasis Delivery — Back Office",
+    demo: "#",
+    private: true,
+    desc: "The staff side of Oasis Delivery, distributed internally rather than through the store. Orders, catalogue, customers and admin accounts in one Flutter app, sharing a core package and a Firebase backend with the customer app.",
+    img: oasisAdmin,
+    imgFit: "contain",
+    category: "Full-Stack",
+    tech: ["Flutter", "Bloc", "Firebase", "Cloud Functions", "TypeScript"],
+    features: [
+      "Dashboard with sales charts over a chosen date range",
+      "Order workflow with printable invoices and packing lists",
+      "Products, categories and banners with image upload",
+      "Customer map and invite-based admin roles",
     ],
   },
   {
